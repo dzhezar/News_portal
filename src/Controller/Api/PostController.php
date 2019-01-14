@@ -24,11 +24,11 @@ final class PostController extends AbstractFOSRestController
             throw new BadRequestHttpException();
         }
 
-        $post = new Post(
-            $request->request->get('title'),
-            $request->request->get('body'),
-            $category
-        );
+        $post = new Post();
+        $post->setTitle($request->request->get('title'))
+            ->setBody($request->request->get('body'))
+            ->setCategory($category)
+            ;
 
         $post->setSlug(
             \strtolower(\str_replace($request->request->get('title'), ' ', '-'))
@@ -60,6 +60,24 @@ final class PostController extends AbstractFOSRestController
             'body' => $post->getBody(),
         ];
 
+        return $this->view($response, Response::HTTP_OK);
+    }
+
+    /**
+     * @Rest\Get("/posts")
+     */
+
+    public function getAllPosts(PostRepository $postRepository)
+    {
+        $posts = $postRepository->findAll();
+
+        foreach ($posts as $post){
+            $response[] = [
+                'id' => $post->getId(),
+                'title' => $post->getTitle(),
+                'body' => $post->getBody(),
+            ];
+        }
         return $this->view($response, Response::HTTP_OK);
     }
 

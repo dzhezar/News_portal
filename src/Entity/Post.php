@@ -37,12 +37,12 @@ class Post
      */
     private $category;
 
-    public function __construct(string $title, string $body, Category $category)
-    {
-        $this->title = $title;
-        $this->body = $body;
-        $this->category = $category;
-    }
+//    public function __construct(string $title, string $body, Category $category)
+//    {
+//        $this->title = $title;
+//        $this->body = $body;
+//        $this->category = $category;
+//    }
 
     public function getId(): ?int
     {
